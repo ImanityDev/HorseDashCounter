@@ -77,9 +77,11 @@ void HorseDashCounter::Render(CanvasWrapper canvas) {
 	CVarWrapper yCvar = cvarManager->getCvar("hdc_overlay_y");
 	CVarWrapper sCvar = cvarManager->getCvar("hdc_overlay_scale");
 	if (!xCvar || !yCvar || !sCvar) return;
+
 	int x = xCvar.getIntValue();
 	int y = yCvar.getIntValue();
 	float s = sCvar.getFloatValue();
+
 	std::string stats1 = std::format("Current Horse Dash counter: {}", horseDashes);
 	std::string stats2 = std::format("Horse Dash Record: {}", maxHorseDashes);
 	auto color = LinearColor{ 255.f, 100.f, 0.f, 255.f };
