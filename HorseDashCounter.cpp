@@ -73,9 +73,13 @@ void HorseDashCounter::countHorseDashes() {
 
 void HorseDashCounter::Render(CanvasWrapper canvas) {
 	if (!gameWrapper->IsInFreeplay()) { return; }
-	int x = cvarManager->getCvar("hcd_overlay_x").getIntValue();
-	int y = cvarManager->getCvar("hcd_overlay_y").getIntValue();
-	float s = cvarManager->getCvar("hcd_overlay_s").getFloatValue();
+	CVarWrapper xCvar = cvarManager->getCvar("hdc_overlay_x");
+	CVarWrapper yCvar = cvarManager->getCvar("hdc_overlay_y");
+	CVarWrapper sCvar = cvarManager->getCvar("hdc_overlay_scale");
+	if (!xCvar || !yCvar || !sCvar) return;
+	int x = xCvar.getIntValue();
+	int y = yCvar.getIntValue();
+	float s = sCvar.getFloatValue();
 	std::string stats1 = std::format("Current Horse Dash counter: {}", horseDashes);
 	std::string stats2 = std::format("Horse Dash Record: {}", maxHorseDashes);
 	auto color = LinearColor{ 255.f, 100.f, 0.f, 255.f };
@@ -120,4 +124,14 @@ void HorseDashCounter::RenderSettings() {
 		ImGui::SetTooltip(s_text.c_str());
 	}
 
+}
+
+std::string HorseDashCounter::GetPluginName()
+{
+	return "Horse Dash Counter";
+}
+
+void HorseDashCounter::SetImGuiContext(uintptr_t ctx)
+{
+	ImGui::SetCurrentContext(reinterpret_cast<ImGuiContext*>(ctx));
 }

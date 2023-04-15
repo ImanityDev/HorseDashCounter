@@ -31,6 +31,8 @@ class HorseDashCounter: public BakkesMod::Plugin::BakkesModPlugin, public Bakkes
 
 public:
 	void RenderSettings() override; // Uncomment if you wanna render your own tab in the settings menu
+	std::string GetPluginName() override;
+	void SetImGuiContext(uintptr_t ctx) override;
 	//void RenderWindow() override; // Uncomment if you want to render your own plugin window
 	void Render(CanvasWrapper canvas);
 };
