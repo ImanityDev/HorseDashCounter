@@ -21,6 +21,7 @@ class HorseDashCounter: public BakkesMod::Plugin::BakkesModPlugin, public Bakkes
 	//Boilerplate
 	unsigned long horseDashes;
 	unsigned long maxHorseDashes;
+	unsigned long lastHorseDash;
 	std::chrono::steady_clock::time_point begin;
 	std::chrono::steady_clock::time_point end;
 	bool flipChanged = false;

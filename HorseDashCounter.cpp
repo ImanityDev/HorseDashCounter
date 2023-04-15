@@ -21,6 +21,7 @@ void HorseDashCounter::onLoad()
 	auto car = gameWrapper->GetLocalCar();
 	if(car) hasFlip = car.HasFlip();
 	horseDashes = 1;
+	lastHorseDash = 1;
 	maxHorseDashes = cvarManager->getCvar("horsedash_record").getIntValue();
 	LOG(std::to_string(maxHorseDashes));
 	gameWrapper->RegisterDrawable([this](CanvasWrapper canvas) {
@@ -61,6 +62,7 @@ void HorseDashCounter::countHorseDashes() {
 						if (!hasFlip) horseDashes++;
 					}
 					else {
+						lastHorseDash = horseDashes;
 						horseDashes = 1;
 					}
 
@@ -83,13 +85,17 @@ void HorseDashCounter::Render(CanvasWrapper canvas) {
 	float s = sCvar.getFloatValue();
 
 	std::string stats1 = std::format("Current Horse Dash counter: {}", horseDashes);
-	std::string stats2 = std::format("Horse Dash Record: {}", maxHorseDashes);
+	std::string stats2 = std::format("Last Horse Dash: {}", lastHorseDash);
+	std::string stats3 = std::format("Horse Dash Record: {}", maxHorseDashes);
+
 	auto color = LinearColor{ 255.f, 100.f, 0.f, 255.f };
 	canvas.SetColor(color);
 	canvas.SetPosition(Vector2F{ (float) x, (float) y });
 	canvas.DrawString(stats1, 1.5*s, 1.5*s, false);
 	canvas.SetPosition(Vector2F{ (float) x, (float) y + 20*s });
 	canvas.DrawString(stats2, 1.5*s, 1.5*s, false);
+	canvas.SetPosition(Vector2F{ (float) x, (float) y + 40*s });
+	canvas.DrawString(stats3, 1.5*s, 1.5*s, false);
 }
 
 void HorseDashCounter::RenderSettings() {
